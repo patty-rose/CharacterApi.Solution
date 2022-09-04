@@ -5,7 +5,7 @@ namespace CharacterApi.Models
   public class CharacterApiContext : DbContext
   {
     public CharacterApiContext(DbContextOptions<CharacterApiContext> options)
-        : base(options)
+      : base(options)
     {
     }
 

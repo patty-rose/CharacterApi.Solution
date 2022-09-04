@@ -21,7 +21,7 @@ namespace CharacterApi.AddControllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Character>>> Get(string firstName, string lastName, int minimumAge)
+    public async Task<ActionResult<IEnumerable<Character>>> Get(string firstName, string lastName, int minimumAge, string mediaTitle, string mediaType)
     {
       var query = _db.Characters.AsQueryable();//=> a queryable LINQ object
 
@@ -36,6 +36,16 @@ namespace CharacterApi.AddControllers
       if (minimumAge > 0)//Because integers in C# are non-nullable data types the default for an integer value parameter will be 0
       {
         query = query.Where(entry => entry.Age >= minimumAge);
+      }
+
+      if (mediaTitle != null)
+      {
+        query = query.Where(entry => entry.MediaTitle == mediaTitle);
+      }
+
+      if (mediaType != null)
+      {
+        query = query.Where(entry => entry.MediaType == mediaType);
       }
       return await query.ToListAsync();//turn our new results into a list.
     }
