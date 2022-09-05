@@ -35,47 +35,19 @@ namespace CharacterApi
     {
       services.AddMvc();
       //adds swagger UI
+
+      services.AddEntityFrameworkMySql()
+        .AddDbContext<CharacterApiContext>(options => options
+        .UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
+
       services.AddSwaggerGen();
       //adds Travel context
       services.AddDbContext<CharacterApiContext>(opt =>
         opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
       SetupJWTServices(services);//adds JWT
-
-      //this adds the user context
-      services.AddDbContext<CharacterApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));  
-      services.AddControllers();
-
-      // adds Identity
-      services.AddIdentity<ApplicationUser, IdentityRole>()  
-        .AddEntityFrameworkStores<CharacterApiContext>()  
-        .AddDefaultTokenProviders();
-
-      // //adds Authentication with User and JWT tokens    
-      // services.AddAuthentication(options =>  
-      // {  
-      //   options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;  
-      //   options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;  
-      //   options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;  
-      // })
-      // // adds Jwt Bearer
-      // .AddJwtBearer(options =>  
-      // {  
-      //   options.SaveToken = true;  
-      //   options.RequireHttpsMetadata = false;  
-      //   options.TokenValidationParameters = new TokenValidationParameters()  
-      //   {  
-      //     ValidateIssuer = true,  
-      //     ValidateAudience = true,  
-      //     ValidAudience = Configuration["JWT:ValidAudience"],  
-      //     ValidIssuer = Configuration["JWT:ValidIssuer"],  
-      //     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))  
-      //   };  
-      // });
-
-      //added w/ Identity/JWT etc.
       services.AddControllers().AddNewtonsoftJson(options =>
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-      );
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
     }
 
     //JWT setup

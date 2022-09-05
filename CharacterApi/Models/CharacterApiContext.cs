@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity; 
 using Microsoft.EntityFrameworkCore;
 using CharacterApi.Models;
 
@@ -23,14 +21,7 @@ namespace CharacterApi.Models
           new Character { CharacterId = 3, FirstName = "Matilda", LastName = "Dinosaur", Age = 2, MediaTitle = "The Land Before Time", MediaType = "Film" },
           new Character { CharacterId = 4, FirstName = "Pip", LastName = "Shark", Age = 4, MediaTitle = "The Land Before Time", MediaType = "Film" },
           new Character { CharacterId = 5, FirstName = "Bartholomew", LastName = "Dinosaur", Age = 22, MediaTitle = "The Land Before Time", MediaType = "Film" }
-      );
-      base.OnModelCreating(builder);
-        builder.Ignore <IdentityUserLogin<string>>();
-        builder.Ignore <IdentityUserRole<string>>();
-        builder.Ignore<IdentityUserClaim<string>>();
-        builder.Ignore<IdentityUserToken<string>>();
-        builder.Ignore<IdentityUser<string>>();
-        builder.Ignore<ApplicationUser>();  
+      ); 
     }
   }
 }
